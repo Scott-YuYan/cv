@@ -142,9 +142,135 @@ function oneTime() {
       oneTime();
     }, 0);
   }
+} // oneTime();
+
+
+function caculateString(s) {
+  var result = new Map();
+  var arr = s.split('');
+  arr.forEach(function (element) {
+    if (result.get(element) === undefined) {
+      result.set(element, 1);
+    } else {
+      var times = result.get(element) + 1;
+      result.set(element, times);
+    }
+  });
+  result.forEach(function (key, value) {
+    console.log(key + '=' + value);
+  });
+} // caculateString.call(null,'hi im frank fang')
+
+
+function fastSort(array) {
+  for (var index = 0; index < array.length - 1; index++) {
+    var minIndex = findMinIndex(array.slice(index)) + index;
+    swap(array, index, minIndex);
+  }
+
+  return array;
 }
 
-oneTime();
+function swap(array, beforeIndex, afterIndex) {
+  var temp = array[beforeIndex];
+  array[beforeIndex] = array[afterIndex];
+  array[afterIndex] = temp;
+}
+
+function findMinIndex(array) {
+  var minIndex = 0;
+
+  for (var index = 1; index < array.length; index++) {
+    var element = array[index];
+
+    if (array[minIndex] > array[index]) {
+      minIndex = index;
+    }
+  }
+
+  return minIndex;
+}
+
+function quickSort(array) {
+  if (array.length === 1 || array.length === 0) {
+    return array;
+  }
+
+  var pivoteIndex = Math.floor(array.length / 2);
+  var pivote = array.splice(pivoteIndex, 1)[0];
+  var leftArr = [];
+  var rightArr = [];
+
+  for (var index = 0; index < array.length; index++) {
+    if (array[index] < pivote) {
+      leftArr.push(array[index]);
+    } else {
+      rightArr.push(array[index]);
+    }
+  }
+
+  return quickSort(leftArr).concat([pivote], quickSort(rightArr));
+}
+
+function mergeSort(array) {
+  if (array.length === 1) {
+    return array;
+  }
+
+  var leftArr = array.slice(0, Math.floor(array.length / 2));
+  var rightArr = array.slice(Math.floor(array.length / 2));
+  return merge(mergeSort(leftArr), mergeSort(rightArr));
+}
+
+function merge(leftArr, rightArr) {
+  if (leftArr.length === 0) {
+    return rightArr;
+  }
+
+  if (rightArr.length === 0) {
+    return leftArr;
+  }
+
+  return leftArr[0] > rightArr[0] ? [rightArr[0]].concat(merge(leftArr, rightArr.slice(1))) : [leftArr[0]].concat(merge(leftArr.slice(1), rightArr));
+}
+
+function caculateSort(array) {
+  var hashTable = {},
+      max = 0,
+      min = 0,
+      result = [];
+
+  for (var index = 0; index < array.length; index++) {
+    if (!(array[index] in hashTable)) {
+      hashTable[array[index]] = 1;
+    } else {
+      hashTable[array[index]] += 1;
+    }
+
+    if (array[index] > max) {
+      max = array[index];
+    }
+
+    if (array[index] < min) {
+      min = array[index];
+    }
+  }
+
+  for (var _index = min; _index <= max; _index++) {
+    if (_index in hashTable) {
+      for (var j = 0; j < hashTable[j]; j++) {
+        var element = array[j];
+      }
+
+      result.push(_index);
+    }
+  }
+
+  return result;
+}
+
+var array = [-10, 2, 4, -1, -3, 8, -9];
+console.log(caculateSort(array));
 },{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

@@ -92,6 +92,126 @@ function oneTime() {
         }, 0);
     }
 }
-oneTime();
+// oneTime();
+
+function caculateString(s) {
+    let result = new Map;
+    let arr = s.split('');
+    arr.forEach(element => {
+        if (result.get(element) === undefined) {
+            result.set(element, 1);
+        } else {
+            let times = result.get(element) + 1;
+            result.set(element, times);
+        }
+    });
+
+    result.forEach(function (key, value) {
+        console.log(key + '=' + value);
+    });
+}
+
+// caculateString.call(null,'hi im frank fang')
 
 
+
+
+function fastSort(array) {
+    for (let index = 0; index < array.length - 1; index++) {
+        let minIndex = findMinIndex(array.slice(index)) + index;
+        swap(array, index, minIndex);
+    }
+    return array;
+}
+
+function swap(array, beforeIndex, afterIndex) {
+    let temp = array[beforeIndex];
+    array[beforeIndex] = array[afterIndex];
+    array[afterIndex] = temp;
+}
+
+function findMinIndex(array) {
+    let minIndex = 0;
+    for (let index = 1; index < array.length; index++) {
+        const element = array[index];
+        if (array[minIndex] > array[index]) {
+            minIndex = index;
+        }
+    }
+    return minIndex;
+}
+
+
+function quickSort(array) {
+    if (array.length === 1 || array.length === 0) {
+        return array;
+    }
+
+    let pivoteIndex = Math.floor(array.length / 2);
+    let pivote = array.splice(pivoteIndex, 1)[0];
+    let leftArr = [];
+    let rightArr = [];
+    for (let index = 0; index < array.length; index++) {
+        if (array[index] < pivote) {
+            leftArr.push(array[index]);
+        } else {
+            rightArr.push(array[index]);
+        }
+    }
+    return quickSort(leftArr).concat([pivote], quickSort(rightArr));
+}
+
+function mergeSort(array) {
+    if (array.length === 1) {
+        return array;
+    }
+    let leftArr = array.slice(0, Math.floor(array.length / 2));
+    let rightArr = array.slice(Math.floor(array.length / 2));
+    return merge(mergeSort(leftArr), mergeSort(rightArr));
+}
+
+function merge(leftArr, rightArr) {
+    if (leftArr.length === 0) {
+        return rightArr;
+    }
+
+    if (rightArr.length === 0) {
+        return leftArr;
+    }
+
+    return leftArr[0] > rightArr[0]
+        ? [rightArr[0]].concat(merge(leftArr, rightArr.slice(1)))
+        : [leftArr[0]].concat(merge(leftArr.slice(1),rightArr));
+}
+
+function caculateSort(array){
+    let hashTable = {},max = 0,min = 0,result = [];
+    for (let index = 0; index < array.length; index++) {
+        if(!(array[index] in hashTable)){
+            hashTable[array[index]] = 1;
+        }else{
+            hashTable[array[index]] += 1;
+        }
+        if(array[index] > max){
+            max =  array[index];
+        }
+
+        if(array[index] < min){
+            min =  array[index];
+        }
+    }
+
+    for (let index = min; index <= max; index++) {
+        if(index in hashTable){
+            for (let j = 0; j < hashTable[j]; j++) {
+                const element = array[j];
+            }
+            result.push(index);
+        }
+    }
+    return result;
+}
+
+let array = [-10, 2, 4, -1, -3, 8, -9];
+
+console.log(caculateSort(array));
